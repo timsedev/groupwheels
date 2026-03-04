@@ -53,24 +53,41 @@ export default function SetupForm({ onComplete }: Props) {
   const total = parseInt(totalPeople, 10) || 0;
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6">
+    <div className="flex-1 flex items-center justify-center p-6">
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
           <div className="text-6xl mb-3">🎡</div>
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+          <h1
+            className="text-4xl font-bold"
+            style={{
+              background: 'linear-gradient(to right, #8b5cf6, #06b6d4)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}
+          >
             Group Spinner
           </h1>
-          <p className="text-gray-400 mt-2">Randomly assign people to groups</p>
+          <p className="mt-2" style={{ color: '#c4b5fd' }}>
+            Randomly assign people to groups
+          </p>
         </div>
 
         <form
           onSubmit={handleSubmit}
-          className="bg-gray-800 rounded-2xl p-6 shadow-2xl space-y-6 border border-gray-700"
+          className="rounded-2xl p-6 shadow-2xl space-y-6 border"
+          style={{
+            backgroundColor: 'rgba(139,92,246,0.08)',
+            borderColor: 'rgba(139,92,246,0.25)',
+          }}
         >
           {/* Groups section */}
           <div>
-            <label className="block text-sm font-semibold text-gray-300 mb-3 uppercase tracking-wide">
+            <label
+              className="block text-sm font-semibold mb-3 uppercase tracking-wide"
+              style={{ color: '#c4b5fd' }}
+            >
               Groups &mdash; {groups.length} total
             </label>
 
@@ -78,7 +95,8 @@ export default function SetupForm({ onComplete }: Props) {
               {groups.map((group, i) => (
                 <div
                   key={i}
-                  className="flex items-center gap-3 bg-gray-700 rounded-xl px-4 py-2.5"
+                  className="flex items-center gap-3 rounded-xl px-4 py-2.5"
+                  style={{ backgroundColor: 'rgba(139,92,246,0.12)' }}
                 >
                   <span
                     className="w-3 h-3 rounded-full flex-shrink-0"
@@ -88,7 +106,10 @@ export default function SetupForm({ onComplete }: Props) {
                   <button
                     type="button"
                     onClick={() => removeGroup(i)}
-                    className="text-gray-500 hover:text-red-400 transition-colors text-lg leading-none"
+                    className="text-lg leading-none transition-colors"
+                    style={{ color: 'rgba(196,181,253,0.5)' }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = '#f87171')}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(196,181,253,0.5)')}
                     aria-label={`Remove ${group}`}
                   >
                     ×
@@ -107,13 +128,25 @@ export default function SetupForm({ onComplete }: Props) {
                 }}
                 onKeyDown={handleKeyDown}
                 placeholder="New group name..."
-                className="flex-1 bg-gray-700 border border-gray-600 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder-gray-500"
+                className="flex-1 rounded-xl px-4 py-2.5 text-sm focus:outline-none text-white placeholder-opacity-50"
+                style={{
+                  backgroundColor: 'rgba(139,92,246,0.12)',
+                  border: '1px solid rgba(139,92,246,0.3)',
+                  color: '#ffffff',
+                }}
+                onFocus={(e) => (e.currentTarget.style.borderColor = '#8b5cf6')}
+                onBlur={(e) => (e.currentTarget.style.borderColor = 'rgba(139,92,246,0.3)')}
               />
               <button
                 type="button"
                 onClick={addGroup}
                 disabled={!newGroup.trim()}
-                className="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-40 disabled:cursor-not-allowed rounded-xl text-sm font-semibold transition-colors"
+                className="px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                style={{ backgroundColor: '#8b5cf6', color: '#ffffff' }}
+                onMouseEnter={(e) => {
+                  if (newGroup.trim()) e.currentTarget.style.backgroundColor = '#7c3aed';
+                }}
+                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#8b5cf6')}
               >
                 Add
               </button>
@@ -122,7 +155,10 @@ export default function SetupForm({ onComplete }: Props) {
 
           {/* Total people section */}
           <div>
-            <label className="block text-sm font-semibold text-gray-300 mb-2 uppercase tracking-wide">
+            <label
+              className="block text-sm font-semibold mb-2 uppercase tracking-wide"
+              style={{ color: '#c4b5fd' }}
+            >
               Total Number of People
             </label>
             <input
@@ -134,10 +170,17 @@ export default function SetupForm({ onComplete }: Props) {
               }}
               min="1"
               max="9999"
-              className="w-full bg-gray-700 border border-gray-600 rounded-xl px-4 py-3 text-xl font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              className="w-full rounded-xl px-4 py-3 text-xl font-bold focus:outline-none text-white"
+              style={{
+                backgroundColor: 'rgba(139,92,246,0.12)',
+                border: '1px solid rgba(139,92,246,0.3)',
+                color: '#ffffff',
+              }}
+              onFocus={(e) => (e.currentTarget.style.borderColor = '#8b5cf6')}
+              onBlur={(e) => (e.currentTarget.style.borderColor = 'rgba(139,92,246,0.3)')}
             />
             {total > 0 && groups.length >= 2 && (
-              <p className="text-sm text-gray-400 mt-2">
+              <p className="text-sm mt-2" style={{ color: '#c4b5fd' }}>
                 ~{Math.round(total / groups.length)} people per group (avg)
               </p>
             )}
@@ -145,7 +188,14 @@ export default function SetupForm({ onComplete }: Props) {
 
           {/* Error */}
           {error && (
-            <p className="text-red-400 text-sm bg-red-900/20 border border-red-800 rounded-lg px-3 py-2">
+            <p
+              className="text-sm rounded-lg px-3 py-2"
+              style={{
+                color: '#fca5a5',
+                backgroundColor: 'rgba(239,68,68,0.1)',
+                border: '1px solid rgba(239,68,68,0.3)',
+              }}
+            >
               {error}
             </p>
           )}
@@ -154,7 +204,17 @@ export default function SetupForm({ onComplete }: Props) {
           <button
             type="submit"
             disabled={groups.length < 2 || !totalPeople || parseInt(totalPeople) < 1}
-            className="w-full py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 disabled:opacity-40 disabled:cursor-not-allowed rounded-xl text-lg font-bold transition-all transform hover:scale-105 active:scale-95 shadow-lg"
+            className="w-full py-4 rounded-xl text-lg font-bold transition-all transform hover:scale-105 active:scale-95 shadow-lg disabled:opacity-40 disabled:cursor-not-allowed disabled:scale-100"
+            style={{
+              background: 'linear-gradient(to right, #8b5cf6, #7c3aed)',
+              color: '#ffffff',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'linear-gradient(to right, #a78bfa, #8b5cf6)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'linear-gradient(to right, #8b5cf6, #7c3aed)';
+            }}
           >
             Start Spinning!
           </button>

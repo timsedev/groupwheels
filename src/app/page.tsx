@@ -82,19 +82,31 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center py-8 px-4">
+    <div className="flex-1 flex flex-col items-center py-8 px-4">
       {/* Header */}
       <div className="w-full max-w-2xl mb-6">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold text-white">Group Spinner</h1>
-            <p className="text-gray-400 text-sm mt-0.5">
+            <p className="text-sm mt-0.5" style={{ color: '#c4b5fd' }}>
               {groups.length} groups &middot; {totalPeople} people total
             </p>
           </div>
           <button
             onClick={handleReset}
-            className="text-sm text-gray-400 hover:text-white px-3 py-1.5 rounded-lg border border-gray-700 hover:border-gray-500 transition-colors"
+            className="text-sm px-3 py-1.5 rounded-lg border transition-colors"
+            style={{
+              color: '#c4b5fd',
+              borderColor: 'rgba(139,92,246,0.4)',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color = '#ffffff';
+              e.currentTarget.style.borderColor = '#8b5cf6';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = '#c4b5fd';
+              e.currentTarget.style.borderColor = 'rgba(139,92,246,0.4)';
+            }}
           >
             ← Reset
           </button>
@@ -103,17 +115,23 @@ export default function Home() {
         {/* Progress bar */}
         <div className="mt-4">
           <div className="flex justify-between text-sm mb-1.5">
-            <span className="text-gray-400">
+            <span style={{ color: '#c4b5fd' }}>
               {totalAssigned} of {totalPeople} assigned
             </span>
-            <span className="text-gray-400">
+            <span style={{ color: '#c4b5fd' }}>
               {Math.round((totalAssigned / totalPeople) * 100)}%
             </span>
           </div>
-          <div className="w-full h-2.5 bg-gray-700 rounded-full overflow-hidden">
+          <div
+            className="w-full h-2.5 rounded-full overflow-hidden"
+            style={{ backgroundColor: 'rgba(139,92,246,0.2)' }}
+          >
             <div
-              className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full transition-all duration-500"
-              style={{ width: `${(totalAssigned / totalPeople) * 100}%` }}
+              className="h-full rounded-full transition-all duration-500"
+              style={{
+                width: `${(totalAssigned / totalPeople) * 100}%`,
+                background: 'linear-gradient(to right, #8b5cf6, #06b6d4)',
+              }}
             />
           </div>
         </div>
@@ -134,7 +152,18 @@ export default function Home() {
           <button
             onClick={handleSpin}
             disabled={isSpinning}
-            className="w-full py-4 text-xl font-bold rounded-2xl transition-all transform hover:scale-105 active:scale-95 shadow-xl disabled:opacity-60 disabled:cursor-not-allowed disabled:scale-100 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500"
+            className="w-full py-4 text-xl font-bold rounded-2xl transition-all transform hover:scale-105 active:scale-95 shadow-xl disabled:opacity-60 disabled:cursor-not-allowed disabled:scale-100"
+            style={{
+              background: 'linear-gradient(to right, #8b5cf6, #7c3aed)',
+            }}
+            onMouseEnter={(e) => {
+              if (!isSpinning) {
+                e.currentTarget.style.background = 'linear-gradient(to right, #a78bfa, #8b5cf6)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'linear-gradient(to right, #8b5cf6, #7c3aed)';
+            }}
           >
             {isSpinning ? (
               <span className="flex items-center justify-center gap-2">
@@ -160,15 +189,26 @@ export default function Home() {
             )}
           </button>
         ) : (
-          <div className="w-full text-center bg-gray-800 border border-gray-700 rounded-2xl p-6">
+          <div
+            className="w-full text-center rounded-2xl p-6 border"
+            style={{
+              backgroundColor: 'rgba(139,92,246,0.1)',
+              borderColor: 'rgba(139,92,246,0.3)',
+            }}
+          >
             <div className="text-4xl mb-2">🏆</div>
-            <p className="text-xl font-bold text-green-400 mb-1">All done!</p>
-            <p className="text-gray-400 text-sm mb-4">
+            <p className="text-xl font-bold mb-1" style={{ color: '#06b6d4' }}>
+              All done!
+            </p>
+            <p className="text-sm mb-4" style={{ color: '#c4b5fd' }}>
               All {totalPeople} people have been assigned
             </p>
             <button
               onClick={handleReset}
-              className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 rounded-xl font-semibold transition-colors"
+              className="px-6 py-2.5 rounded-xl font-semibold transition-colors"
+              style={{ backgroundColor: '#8b5cf6' }}
+              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#7c3aed')}
+              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#8b5cf6')}
             >
               Start Over
             </button>
@@ -178,7 +218,12 @@ export default function Home() {
 
       {/* Group summary chips */}
       <div className="mt-6 w-full max-w-2xl">
-        <p className="text-xs text-gray-500 uppercase tracking-wide mb-3">Assignment Summary</p>
+        <p
+          className="text-xs uppercase tracking-wide mb-3"
+          style={{ color: 'rgba(196,181,253,0.6)' }}
+        >
+          Assignment Summary
+        </p>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
           {groups.map((g, i) => {
             const color = WHEEL_COLORS[i % WHEEL_COLORS.length];
@@ -198,10 +243,7 @@ export default function Home() {
                 <span className="text-sm font-medium text-white truncate flex-1">
                   {g.name}
                 </span>
-                <span
-                  className="text-sm font-bold flex-shrink-0"
-                  style={{ color }}
-                >
+                <span className="text-sm font-bold flex-shrink-0" style={{ color }}>
                   {g.assigned}
                 </span>
               </div>

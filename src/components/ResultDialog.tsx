@@ -25,12 +25,10 @@ export default function ResultDialog({
   const remaining = totalPeople - totalAssigned;
   const color = WHEEL_COLORS[groupIndex % WHEEL_COLORS.length];
 
-  // Focus button on mount for keyboard accessibility
   useEffect(() => {
     buttonRef.current?.focus();
   }, []);
 
-  // Close on Escape key
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -48,13 +46,20 @@ export default function ResultDialog({
     >
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+        className="absolute inset-0 backdrop-blur-sm"
+        style={{ backgroundColor: 'rgba(13,1,23,0.8)' }}
         onClick={onClose}
       />
 
       {/* Dialog card */}
-      <div className="relative bg-gray-800 border border-gray-700 rounded-2xl p-8 shadow-2xl max-w-sm w-full text-center animate-scale-in">
-        {/* Confetti-like decorative top bar */}
+      <div
+        className="relative rounded-2xl p-8 shadow-2xl max-w-sm w-full text-center animate-scale-in border"
+        style={{
+          backgroundColor: '#130328',
+          borderColor: 'rgba(139,92,246,0.3)',
+        }}
+      >
+        {/* Top accent bar */}
         <div
           className="absolute top-0 left-0 right-0 h-1.5 rounded-t-2xl"
           style={{ backgroundColor: color }}
@@ -78,43 +83,50 @@ export default function ResultDialog({
           {allDone ? 'All done!' : 'Person assigned!'}
         </h2>
 
-        <p className="text-gray-400 mb-5">
+        <p className="mb-5" style={{ color: '#c4b5fd' }}>
           <span className="text-white font-semibold">{groupName}</span> now has{' '}
           <span className="text-white font-semibold">{newCount}</span>{' '}
           {newCount === 1 ? 'person' : 'people'}
         </p>
 
-        {/* Progress ring / stats row */}
+        {/* Stats row */}
         <div className="flex justify-center gap-6 mb-6 text-sm">
           <div className="text-center">
-            <div className="text-2xl font-bold text-indigo-400">{totalAssigned}</div>
-            <div className="text-gray-500">assigned</div>
+            <div className="text-2xl font-bold" style={{ color: '#8b5cf6' }}>
+              {totalAssigned}
+            </div>
+            <div style={{ color: 'rgba(196,181,253,0.6)' }}>assigned</div>
           </div>
-          <div className="w-px bg-gray-700" />
+          <div className="w-px" style={{ backgroundColor: 'rgba(139,92,246,0.3)' }} />
           <div className="text-center">
-            <div className="text-2xl font-bold text-gray-400">{remaining}</div>
-            <div className="text-gray-500">remaining</div>
+            <div className="text-2xl font-bold" style={{ color: '#06b6d4' }}>
+              {remaining}
+            </div>
+            <div style={{ color: 'rgba(196,181,253,0.6)' }}>remaining</div>
           </div>
-          <div className="w-px bg-gray-700" />
+          <div className="w-px" style={{ backgroundColor: 'rgba(139,92,246,0.3)' }} />
           <div className="text-center">
             <div className="text-2xl font-bold text-white">{totalPeople}</div>
-            <div className="text-gray-500">total</div>
+            <div style={{ color: 'rgba(196,181,253,0.6)' }}>total</div>
           </div>
         </div>
 
         {/* Mini progress bar */}
-        <div className="w-full h-2 bg-gray-700 rounded-full mb-6 overflow-hidden">
+        <div
+          className="w-full h-2 rounded-full mb-6 overflow-hidden"
+          style={{ backgroundColor: 'rgba(139,92,246,0.2)' }}
+        >
           <div
             className="h-full rounded-full transition-all duration-500"
             style={{
               width: `${(totalAssigned / totalPeople) * 100}%`,
-              backgroundColor: color,
+              background: 'linear-gradient(to right, #8b5cf6, #06b6d4)',
             }}
           />
         </div>
 
         {allDone && (
-          <p className="text-green-400 font-semibold mb-4 text-sm">
+          <p className="font-semibold mb-4 text-sm" style={{ color: '#06b6d4' }}>
             🎊 All {totalPeople} people have been assigned!
           </p>
         )}
@@ -122,11 +134,10 @@ export default function ResultDialog({
         <button
           ref={buttonRef}
           onClick={onClose}
-          className="w-full py-3 rounded-xl text-base font-bold transition-all hover:scale-105 active:scale-95"
-          style={{
-            backgroundColor: color,
-            color: '#fff',
-          }}
+          className="w-full py-3 rounded-xl text-base font-bold transition-all hover:scale-105 active:scale-95 text-white"
+          style={{ backgroundColor: '#8b5cf6' }}
+          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#7c3aed')}
+          onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#8b5cf6')}
         >
           {allDone ? 'View Results' : 'Spin Again'}
         </button>

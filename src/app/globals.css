@@ -11,3 +11,26 @@ body {
   margin: 0;
   padding: 0;
 }
+
+.app-body {
+  background-color: #0d0117;
+  color: #ffffff;
+}
+
+.app-header {
+  border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.app-footer {
+  border-top: 1px solid rgba(139, 92, 246, 0.2);
+  color: #c4b5fd;
+}
+
+.deploid-link {
+  color: #8b5cf6;
+  transition: color 0.2s;
+}
+
+.deploid-link:hover {
+  color: #06b6d4;
+}
