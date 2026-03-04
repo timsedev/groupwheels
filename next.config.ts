@@ -1,7 +1,8 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  basePath: '/xxx', // replace with your actual subpath
+  output: 'export',
+  basePath: '/xxx', // replace with your actual subpath e.g. /wheels
 };
 
 export default nextConfig;
